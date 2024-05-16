@@ -31,11 +31,14 @@ export function withMiddleware2(middleware: CustomMiddleware) {
     const url = request.nextUrl.clone()
     url.pathname = '/dest'
 
-    response = NextResponse.redirect(url, {
-      headers: response.headers
-    })
+    const redirectResponse = NextResponse.redirect(
+      new URL('/something', request.url),
+      {
+        headers: response.headers
+      }
+    )
 
     // Call the next middleware and pass the request and response
-    return middleware(request, event, response)
+    return middleware(request, event, redirectResponse)
   }
 }
