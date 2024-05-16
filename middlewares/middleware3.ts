@@ -6,7 +6,7 @@ import {
 
 import { CustomMiddleware } from './chain'
 
-export function withMiddleware2(middleware: CustomMiddleware) {
+export function withMiddleware3(middleware: CustomMiddleware) {
   return async (
     request: NextRequest,
     event: NextFetchEvent,
@@ -15,25 +15,16 @@ export function withMiddleware2(middleware: CustomMiddleware) {
     console.log('-------')
     // Perform whatever logic the second middleware needs to do
     const pathname = request.nextUrl.pathname
-    request.cookies.set('middleware2', 'true')
 
-    console.log('middleware2 =>', { pathname })
-
+    console.log('middleware3 =>', { pathname })
     console.log(
-      'middleware2 - request cookies =>',
-      request.cookies.get('middleware1')
+      'middleware3 - request cookies =>',
+      request.cookies.get('middleware2')
     )
     console.log(
-      'middleware2 - response cookies =>',
+      'middleware3 - response cookies =>',
       response.cookies.get('vercel')
     )
-
-    const url = request.nextUrl.clone()
-    url.pathname = '/dest'
-
-    response = NextResponse.redirect(url, {
-      headers: response.headers
-    })
 
     // Call the next middleware and pass the request and response
     return middleware(request, event, response)
